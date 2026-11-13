@@ -5,4 +5,6 @@ MongoDB.
 
 O utilizador introduz o seu código pessoal para descobrir o amigo secreto e
 pode consultar e atualizar a sua lista de prendas. Os dados são guardados no
-MongoDB.
+MongoDB. 
+
+Site está deployed em vercel em https://sorteionatal.vercel.app/
