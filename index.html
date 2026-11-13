@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteio de Natal</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+            background:
+                radial-gradient(circle at 15% 15%, rgba(255,255,255,0.12), transparent 25%),
+                radial-gradient(circle at 85% 85%, rgba(255,215,100,0.12), transparent 30%),
+                linear-gradient(135deg, #104b20, #267d3a 55%, #0d572c);
+            color: white;
+            text-align: center;
+            padding: 40px 24px;
+            min-height: 100vh;
+            margin: 0;
+        }
+        *, *::before, *::after {
+            box-sizing: inherit;
+        }
+        .container {
+            width: min(94vw, 980px);
+            min-height: calc(100vh - 80px);
+            margin: 0 auto;
+            padding: clamp(32px, 6vw, 72px);
+        }
+        h1 {
+            margin: 0 0 14px;
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            letter-spacing: 0.02em;
+            text-shadow: 0 3px 12px rgba(0,0,0,0.25);
+        }
+        h3 {
+            font-size: 1.35rem;
+            margin-top: 30px;
+        }
+        input {
+            padding: 15px 18px;
+            margin: 10px;
+            border: none;
+            border-radius: 12px;
+            width: min(85%, 330px);
+            text-align: center;
+            font-size: 17px;
+            outline: 3px solid transparent;
+            box-shadow: 0 7px 18px rgba(0,0,0,0.15);
+            transition: outline-color 0.2s, transform 0.2s;
+        }
+        input:focus {
+            outline-color: rgba(255,215,100,0.8);
+            transform: translateY(-2px);
+        }
+        button {
+            background: linear-gradient(135deg, #ff7777, #e94d5f);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px;
+            box-shadow: 0 7px 16px rgba(0,0,0,0.18);
+            transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+        }
+        button:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.08);
+            box-shadow: 0 11px 22px rgba(0,0,0,0.24);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .resultado {
+            background: rgba(255,255,255,0.96);
+            color: #2d8a3a;
+            padding: clamp(24px, 5vw, 48px);
+            border-radius: 20px;
+            margin: 34px 0;
+            box-shadow: 0 14px 32px rgba(0,0,0,0.18);
+            display: none;
+        }
+        .resultado h2 {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto 24px;
+            font-size: clamp(1.35rem, 3.8vw, 2.7rem);
+            line-height: 1.2;
+            overflow-wrap: break-word;
+            word-break: normal;
+        }
+        #loginSection h3 {
+            margin: 34px auto 22px;
+            font-size: clamp(1.6rem, 3.8vw, 2.7rem);
+            line-height: 1.2;
+        }
+        #loginSection .codigo-input {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+        }
+        #loginSection button {
+            font-size: clamp(1.15rem, 2.5vw, 1.45rem);
+            padding: 18px 34px;
+        }
+        #resultadoNome {
+            font-size: clamp(2rem, 6vw, 3.5rem) !important;
+            line-height: 1.15;
+        }
+        #botoesAcao button,
+        #resultadoSection > button {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            padding: 16px 30px;
+        }
+        .codigo-input {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .snowflake {
+            position: fixed;
+            color: white;
+            font-size: 20px;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .btn-desejos {
+            background: linear-gradient(135deg, #4caf50, #278c50);
+            margin: 5px;
+        }
+        .btn-desejos:hover {
+            background: linear-gradient(135deg, #58bd5c, #329f5d);
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 16px 10px;
+            }
+            .container {
+                width: 100%;
+                min-height: calc(100vh - 32px);
+                padding: 28px 16px;
+                border-radius: 20px;
+            }
+            button {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sorteio de Natal 2026</h1>
+        <p>Descobre a quem vais dar o presente este ano!</p>
+        
+        <div id="loginSection">
+            <h3>Insere o Teu Código Pessoal:</h3>
+            <input type="text" id="codigoInput" placeholder="Ex: N12345" class="codigo-input">
+            <br>
+            <button onclick="verifyCode()">Descobrir Amigo Secreto</button>
+        </div>
+        
+        <div id="resultadoSection" class="resultado">
+            <h2>O Teu Amigo Secreto é...</h2>
+            <div id="resultadoNome" style="font-size: 24px; font-weight: bold; margin: 20px 0;"></div>
+            
+            <div id="botoesAcao" style="display: none; margin: 20px 0;">
+                <div>
+                    <button class="btn-desejos" onclick="viewFriendWishlist()">Ver Lista de Prendas do Amigo</button>
+                </div>
+                <div>
+                    <button class="btn-desejos" onclick="manageMyWishlist()">Gerir Minha Lista de Prendas</button>
+                </div>
+            </div>
+            
+            <button onclick="goBack()">Voltar atrás</button>
+        </div>
+        
+        <div id="desejosSection" class="resultado" style="display: none; background: #f8f8f8;">
+            <h2>Lista de Prendas</h2>
+            
+            <div id="minhaListaSection">
+                <h3>A minha Lista de Prendas</h3>
+                
+                <div id="listaAtual" style="margin: 15px 0; padding: 15px; background: rgba(255,255,255,0.2); border-radius: 8px;">
+                    <h4>Itens na minha lista:</h4>
+                    <ul id="itensLista" style="text-align: left; list-style-type: none; padding: 0;">
+                        <!-- Itens aparecem aqui -->
+                    </ul>
+                </div>
+                
+                <div style="margin: 20px 0;">
+                    <input type="text" id="novoItemInput" placeholder="Adicionar novo item (ex: Lego)" 
+                           style="background: #969696; padding: 10px; width: 70%; border-radius: 5px; border: none;">
+                    <button onclick="addItem()" style="padding: 10px 15px; margin-left: 10px;">➕ Adicionar</button>
+                </div>
+                
+                <div id="minhaListaStatus" style="margin-top: 15px;"></div>
+            </div>
+            
+            <div id="listaAmigoSection" style="display: none; margin-top: 30px;">
+                <h3>Lista de Prendas do Teu Amigo Secreto</h3>
+                <div id="listaAmigoContent" style="background: #f0f8ff; padding: 15px; border-radius: 8px; text-align: left;">
+                    <!-- A lista aparece aqui -->
+                </div>
+            </div>
+            
+            <br>
+            <button onclick="goBackToResult()">← Voltar para Resultado</button>
+        </div>
+        
+        <div style="margin-top: 30px; font-size: 14px; opacity: 0.8;">
+            <p>Guarda o teu código em segredo!❄️</p>
+        </div>
+    </div>
+
+    <script src="mongo-client.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
