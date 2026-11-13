@@ -6,12 +6,19 @@ let currentWishlist = [];
 let currentDrawData = null;
 
 async function verifyCode() {
-    const inputCode = document.getElementById('codigoInput').value.trim().toUpperCase();
+    const inputCode = document.getElementById('codigoInput').value.trim();
+    const verifyButton = document.getElementById('verifyButton');
+    const loadingMessage = document.getElementById('loginLoading');
     
     if (!inputCode) {
         alert('Por favor, insere o teu código!');
         return;
     }
+
+    verifyButton.disabled = true;
+    verifyButton.innerHTML = '<span class="loading-spinner" aria-hidden="true"></span>A carregar...';
+    loadingMessage.hidden = false;
+    loadingMessage.textContent = 'A procurar os dados do sorteio...';
     
     try {
         const cacheKey = `sorteio-natal:${inputCode}`;
@@ -45,6 +52,11 @@ async function verifyCode() {
     } catch (error) {
         console.error('Erro ao carregar o sorteio:', error);
         alert('Código inválido! Verifica o código e tenta novamente.');
+    } finally {
+        verifyButton.disabled = false;
+        verifyButton.textContent = 'Descobrir Amigo Secreto';
+        loadingMessage.hidden = true;
+        loadingMessage.textContent = '';
     }
 }
 

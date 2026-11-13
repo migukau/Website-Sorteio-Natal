@@ -74,6 +74,27 @@
         button:active {
             transform: translateY(0);
         }
+        button:disabled {
+            cursor: wait;
+            opacity: 0.8;
+            transform: none;
+        }
+        .loading-spinner {
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            margin-right: 8px;
+            border: 3px solid rgba(255,255,255,0.45);
+            border-top-color: white;
+            border-radius: 50%;
+            vertical-align: -0.15em;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
         .resultado {
             background: rgba(255,255,255,0.96);
             color: #2d8a3a;
@@ -156,7 +177,8 @@
             <h3>Insere o Teu Código Pessoal:</h3>
             <input type="text" id="codigoInput" placeholder="Ex: N12345" class="codigo-input">
             <br>
-            <button onclick="verifyCode()">Descobrir Amigo Secreto</button>
+            <button id="verifyButton" onclick="verifyCode()">Descobrir Amigo Secreto</button>
+            <p id="loginLoading" role="status" aria-live="polite" hidden></p>
         </div>
         
         <div id="resultadoSection" class="resultado">
